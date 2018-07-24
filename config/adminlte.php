@@ -110,9 +110,25 @@ return [
     'menu' => [
         'MAIN NAVIGATION',
         [
-            'text' => 'Home',
+            'text' => 'Dashboard',
             'url'  => 'admin',
-            'icon' => 'home', 
+            'icon' => 'dashboard', 
+        ],
+        [
+            'text' => 'Financial',
+            'icon' => 'money',
+            'submenu' => [
+                [
+                    'text' => 'Balance',
+                    'url'  => 'admin/balance',
+                    'icon' => 'credit-card-alt', 
+                ],
+                [
+                    'text' => 'Historic',
+                    'url'  => 'admin/historic',
+                    'icon' => 'history', 
+                ]
+            ]
         ]
     ],
 
