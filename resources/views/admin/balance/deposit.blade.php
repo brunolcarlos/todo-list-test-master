@@ -17,7 +17,7 @@
                 {!! csrf_field()!!}
                 <div class="form-group">
                     <label for="deposit_value">Deposit Value</label><br>
-                    <input type="text" placeholder="Deposit value" class="form-control"><br><br>
+                    <input name="value" type="text" placeholder="Deposit value" class="form-control"><br><br>
                     <button class="btn btn-success">Deposit</button>
                 </div>
             </form>
