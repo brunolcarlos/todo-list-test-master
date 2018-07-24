@@ -3,7 +3,7 @@
 namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
-
+use DB;
 
 class Balance extends Model
 {
@@ -11,7 +11,10 @@ class Balance extends Model
     public $timestamps = false;
     
     public function deposit($value){
-        $totalBefore = $this->amount;
+
+        DB::beginTransaction();
+
+        $totalBefore = $this->amount ? $this->amount : 0 ;
         $historicTransaction = auth()->user()->historics()->create([
             'type'        => 'I',
             'amount'      => $value,
@@ -21,7 +24,15 @@ class Balance extends Model
             ]);
             
             $this->amount += $value;
-            $this->save();
+            $ifSave = $this->save();
+
+            if($historicTransaction and $ifSave){
+
+                DB::commit();
+
+            }else{
+                DB::rollback();
+            }
         }
     }
     
