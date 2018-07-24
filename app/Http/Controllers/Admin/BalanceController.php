@@ -8,6 +8,18 @@ use App\Http\Controllers\Controller;
 class BalanceController extends Controller
 {
     public function index(){
-        return view('admin.balance.index');
+
+
+        $balance = auth()->user()->balance;
+        $amount = $balance ? $balance->amount : '0';
+        return view('admin.balance.index',compact('amount'));
     }
+
+    public function deposit(){
+        return view('admin.balance.deposit');
+    }
+    public function store(Request $request){
+        return view('admin.balance.store');
+    }
+
 }
