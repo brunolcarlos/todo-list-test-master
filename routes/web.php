@@ -9,6 +9,10 @@ $this->group(['middleware',['auth'],'namespace' =>'Admin','prefix' => 'admin'], 
  
 });
 
+$this->get('/','AdminController@index')->name('admin.home');
+$this->get('/home',function(){
+    return redirect('/login');
+});
 
 
 $this->get('/', 'Site\SiteController@index')->name('home');

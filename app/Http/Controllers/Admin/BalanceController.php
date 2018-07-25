@@ -20,12 +20,14 @@ class BalanceController extends Controller
         return view('admin.balance.deposit');
     }
     public function store(Request $request){
-
+        
+        $value = ((int)$request->value) ? (int)$request->value : 0 ;
         $balance = auth()->user()->balance()->firstOrCreate([]);
-        $balance->deposit($request->value);
+        $balance->deposit((int)number_format($value, 2,',',''));
         $balance = auth()->user()->balance;
         $amount = $balance ? $balance->amount : '0';
-        return view('admin.balance.index',compact('amount'));
+    
+        return redirect('admin/balance');
     }
 
 }

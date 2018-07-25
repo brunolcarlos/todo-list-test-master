@@ -13,25 +13,33 @@ class Balance extends Model
     public function deposit($value){
 
         DB::beginTransaction();
-
+        $value = $this->amount += $value;
         $totalBefore = $this->amount ? $this->amount : 0 ;
         $historicTransaction = auth()->user()->historics()->create([
             'type'        => 'I',
             'amount'      => $value,
             'total_before'=> $totalBefore,
-            'total_after' => $this->amount += $value,
+            'total_after' => $value,
             'date'        => date('Ymd')
             ]);
             
-            $this->amount += $value;
+            
             $ifSave = $this->save();
 
             if($historicTransaction and $ifSave){
 
                 DB::commit();
+                return [
+                    'success' => true,
+                    'typeMessage' => 'Thanks for add credit',
+                ];
 
             }else{
                 DB::rollback();
+                return [
+                    'success' => false,
+                    'typeMessage' => 'Something is wrong',
+                ];
             }
         }
     }
